@@ -23,7 +23,8 @@ import sys
 from os import path 
 from shutil import move
 import logging
-from utils.global_function import moveFile, downloadCsvFile
+from glob import glob
+from utils.global_function import moveFile, downloadCsvFile, listFile
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
@@ -59,16 +60,29 @@ def start(pathLocal: str, pathDest: str, url: str):
             logger.error(f"Erro pathLocal está vazia, não contém arquivo")
             return False
         
-        for file in pathLocal:
-            logger.info(f"arquivo csv encontrado em pathLocal {file}")
+        sendDataList = {
+            "pathLocal": pathLocal,
+            "filePrefix": '',
+            "fileExtension": ['.txt', '.csv', '.json', '.ini'],
+            "fileRules": ''
+        }
 
-        logger.info(f"=== Preparando mover arquivo ===")
+        resulList = listFile(sendDataList)
+        if not resulList:
+            logger.error(f"Erro listar arquivo em {pathLocal}")
+            return False
+
+        file = resulList[0]
+        logger.info(f"file ...: type {type(file)}, content {file}")     
+
         sendData = {
             "file": file,
             "pathLocal": pathLocal,
             "pathLocalDest": pathDest
         }
-        
+        logger.info(f"file ...: type {type(file)}, content {file}")
+
+        logger.info(f"=== Preparando mover arquivo ===")
         resultPath = moveFile(sendData)
         if not resultPath:
             logger.error("Erro ao mover o arquivo CSV para o destino.")

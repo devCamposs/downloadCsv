@@ -30,8 +30,8 @@ logger = logging.getLogger(__name__)
 if __name__ == "__main__":
 
     logger.info(f"=== Definindo variaveis do programa ===")
-    pathLocal = '/Users/thoma/Documents/tmp'
-    pathDest = '/Users/thoma/Documents/tmp/recebidos'
-    url = 'https://www.atelie.com.br/catalogo.php'
+    pathLocal = '/Users/thoma/Documents/tmp/recebidos/'
+    pathDest = '/Users/thoma/Documents/tmp/recebidos/executados/'
+    url = 'https://github.com/cambridgecoding/machinelearningregression/blob/master/data/bikes.csv'
 
     start(pathLocal, pathDest, url )
